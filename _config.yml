@@ -4,7 +4,7 @@ SEOTitle: 南柯的博客 | Nanco Blog
 header-img: img/post-bg-desk.jpg
 email: 984731489@gmail.com
 description: "Every failure is leading towards success."
-keyword: "Nanco, Nanco Blog, 南柯的博客, 南柯, nanco, NanCo"
+keyword: "Nanco, Nanco Blog, 南柯的博客, 南柯, nanco, NanCo, go, golang, python, c++"
 url: "http://meetnanco.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 github_repo: "https://github.com/meetnanco/meetnanco.github.io.git" # you code repository
