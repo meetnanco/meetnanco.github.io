@@ -2,27 +2,27 @@
 title: Nanco Blog
 SEOTitle: 南柯的博客 | Nanco Blog
 header-img: img/post-bg-desk.jpg
-email: qiubaiying@gmail.com
+email: 984731489@gmail.com
 description: "Every failure is leading towards success."
-keyword: "BY, BY Blog, 柏荧的博客, qiubaiying, 邱柏荧, iOS, Apple, iPhone"
-url: "http://qiubaiying.github.io"          # your host, for absolute URL
+keyword: "Nanco, Nanco Blog, 南柯的博客, 南柯, nanco, NanCo"
+url: "http://meetnanco.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
-github_repo: "https://github.com/qiubaiying/qiubaiying.github.io.git" # you code repository
+github_repo: "https://github.com/meetnanco/meetnanco.github.io.git" # you code repository
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "Goals determine what you going to be!"
-sidebar-avatar: /img/about-guan.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: /img/about-love.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
 # SNS settings
 RSS: false
-# weibo_username:     qiubaiying
-zhihu_username:     qiubaiying
-github_username:    qiubaiying
-facebook_username:  baiying.qiu.7
-jianshu_username:   e71990ada2fd
+# weibo_username:     meetnanco
+zhihu_username:     meetnanco
+github_username:    meetnanco
+facebook_username:  meetnanco
+jianshu_username:   meetnanco
 #twitter_username:   qiubaiying
 
 
@@ -59,17 +59,6 @@ kramdown:
 # Disqus（https://disqus.com/）
 # disqus_username: qiubaiying
 
-# Gitalk
-gitalk:
-  enable: true    #是否开启Gitalk评论
-  clientID: f2c84e7629bb1446c1a4                            #生成的clientID
-  clientSecret: ca6d6139d1e1b8c43f8b2e19492ddcac8b322d0d    #生成的clientSecret
-  repo: qiubaiying.github.io    #仓库名称
-  owner: qiubaiying    #github用户名
-  admin: qiubaiying
-  distractionFreeMode: true #是否启用类似FB的阴影遮罩
-
-
 # 统计
 
 # Analytics settings
@@ -104,7 +93,8 @@ friends: [
     },{
         title: "简书·BY",
         href: "http://www.jianshu.com/u/e71990ada2fd"
-    },{
+    },
+    {
         title: "Apple",
         href: "https://apple.com"
     },{
