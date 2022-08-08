@@ -87,7 +87,7 @@
                     </li>
                     {% endif %}{% endfor %}
                     <li class="navlinks-container">
-                        <a class="navlinks-parent" href="javascript:void(0)">gitbooks</a>
+                        <a class="navlinks-parent" href="javascript:void(0)">mybooks</a>
                         <div class="navlinks-children">
                           
                             <a href="https://chai2010.gitbooks.io/advanced-go-programming-book/content/">Advanced Go Programming</a>
@@ -168,7 +168,7 @@
     document.addEventListener('click', function(e){
         if(e.target == $toggle) return;
         if(e.target.className == 'icon-bar') return;
-        if (e.target.className == 'navlinks-container' ) return;
+        if(e.target.className == 'navlinks-parent') return;
         __HuxNav__.close();
     });
     document.addEventListener('DOMContentLoaded', mobileClick.init);
