@@ -87,7 +87,7 @@
                     </li>
                     {% endif %}{% endfor %}
                     <li class="navlinks-container">
-                        <a class="navlinks-parent" href="javascript:void(0)">mybooks</a>
+                        <a class="navlinks-parent" href="javascript:void(0)">mybook</a>
                         <div class="navlinks-children">
                           
                             <a href="https://chai2010.gitbooks.io/advanced-go-programming-book/content/">Advanced Go Programming</a>
@@ -112,22 +112,22 @@
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
 
-    var __HuxNav__ = {
-        close: function(){
-            $navbar.className = " ";
-            // wait until animation end.
-            setTimeout(function(){
-                // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        },
-        open: function(){
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
+    // var __HuxNav__ = {
+    //     close: function(){
+    //         $navbar.className = " ";
+    //         // wait until animation end.
+    //         setTimeout(function(){
+    //             // prevent frequently toggle
+    //             if($navbar.className.indexOf('in') < 0) {
+    //                 $collapse.style.height = "0px"
+    //             }
+    //         },400)
+    //     },
+    //     open: function(){
+    //         $collapse.style.height = "auto"
+    //         $navbar.className += " in";
+    //     }
+    // }
 
     var mobileClick = {
         init : function() {
@@ -146,13 +146,13 @@
     }
 
     // Bind Event
-    $toggle.addEventListener('click', function(e){
-        if ($navbar.className.indexOf('in') > 0) {
-            __HuxNav__.close()
-        }else{
-            __HuxNav__.open()
-        }
-    })
+    // $toggle.addEventListener('click', function(e){
+    //     if ($navbar.className.indexOf('in') > 0) {
+    //         __HuxNav__.close()
+    //     }else{
+    //         __HuxNav__.open()
+    //     }
+    // })
 
     /**
      * Since Fastclick is used to delegate 'touchstart' globally
@@ -168,7 +168,7 @@
     document.addEventListener('click', function(e){
         if(e.target == $toggle) return;
         if(e.target.className == 'icon-bar') return;
-        __HuxNav__.close();
+        // __HuxNav__.close();
     });
     document.addEventListener('DOMContentLoaded', mobileClick.init);
 </script>
