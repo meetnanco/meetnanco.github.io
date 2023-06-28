@@ -1,0 +1,46 @@
+I"�<h1 id="redis执行原子操作">Redis执行原子操作</h1>
+
+<h2 id="1单命令操作">1、单命令操作</h2>
+<hr />
+<p>使用redis自封装的操作命令，如SETNX/INCR/DECR等命令</p>
+
+<h2 id="2redis锁">2、Redis锁</h2>
+<hr />
+<p>调用SETNX对某个键加锁，使得业务逻辑串行化处理</p>
+
+<p>注意加锁需要处理通用的几个问题：</p>
+<ul>
+  <li>锁的超时释放</li>
+  <li>误解锁的风险</li>
+</ul>
+
+<h2 id="3lua脚本">3、Lua脚本</h2>
+<hr />
+<p>redis会把整个lua脚本作为一个整体执行，在执行的过程中不会被其他命令打断， 从而保证lua脚本中操作的原子性</p>
+
+<h3 id="go中使用lua脚本操作redis">Go中使用lua脚本操作redis：</h3>
+<div class="language-lua highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">local</span> <span class="n">redis_key</span> <span class="o">=</span> <span class="n">KEYS</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="kd">local</span> <span class="n">value</span><span class="o">=</span> <span class="n">ARGV</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="kd">local</span> <span class="n">expire</span> <span class="o">=</span> <span class="n">ARGV</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="kd">local</span> <span class="n">token</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="n">redis_key</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="kc">false</span> <span class="k">then</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">account</span><span class="o">..</span><span class="s2">":"</span><span class="o">..</span><span class="n">account</span>
+<span class="k">end</span>
+<span class="n">redis</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="s1">'SET'</span><span class="p">,</span> <span class="n">redis_key</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span>
+<span class="n">redis</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="s1">'EXPIRE'</span><span class="p">,</span> <span class="n">redis_key</span><span class="p">,</span> <span class="n">expire</span><span class="p">)</span>
+<span class="k">return</span> <span class="n">token</span>
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">注意不同其他语言，Lua中数组的下标是从1开始的</code></p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">InitRedisClient</span><span class="p">()</span>
+	<span class="n">luaScript</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">NewScript</span><span class="p">(</span>
+		<span class="s">`lua脚本内容`</span>
+	<span class="p">)</span>
+	<span class="n">r</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">luaScript</span><span class="o">.</span><span class="n">Eval</span><span class="p">(</span><span class="n">rClient</span><span class="p">,</span> <span class="s">"myKey"</span><span class="p">,</span> <span class="m">1111</span><span class="p">)</span><span class="o">.</span><span class="n">Result</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Err"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+:ET

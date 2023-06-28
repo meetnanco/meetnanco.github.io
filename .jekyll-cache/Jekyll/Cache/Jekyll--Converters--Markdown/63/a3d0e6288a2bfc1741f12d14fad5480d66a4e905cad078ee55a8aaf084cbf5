@@ -1,0 +1,79 @@
+I"�<h1 id="go随手记">Go随手记</h1>
+
+<h2 id="1数组数据大用指针数据小用数组">1、数组数据大用指针，数据小用数组</h2>
+<hr />
+<p>参数传入数组时若其数据量较大要用指针，因为Go数组是值类型，赋值和传参都会复制整个数组数据</p>
+
+<h2 id="2select语句的多个case执行顺序是随机的">2、select语句的多个case执行顺序是随机的</h2>
+<hr />
+
+<h2 id="3切片参数">3、切片参数</h2>
+<hr />
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">arr</span> <span class="o">:=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">5</span><span class="p">}</span>
+<span class="k">var</span> <span class="p">(</span>
+	<span class="n">low</span>  <span class="o">=</span> <span class="m">1</span><span class="p">,</span>
+	<span class="n">high</span> <span class="o">=</span> <span class="m">3</span><span class="p">,</span>
+	<span class="n">max</span>  <span class="o">=</span> <span class="m">5</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">s</span> <span class="o">:=</span> <span class="n">arr</span><span class="p">[</span><span class="n">low</span><span class="o">:</span><span class="n">high</span><span class="o">:</span><span class="n">max</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>max为切片保留的原切片的最大下标（不含max）</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">len</span> <span class="o">=</span> <span class="n">high</span> <span class="o">-</span> <span class="n">low</span>
+<span class="nb">cap</span> <span class="o">=</span> <span class="n">max</span> <span class="o">-</span> <span class="n">low</span>
+</code></pre></div></div>
+
+<h2 id="4切片扩容机制">4、切片扩容机制</h2>
+<hr />
+
+<p><em>4.1、</em>扩容规则：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cap(slice) &lt; 1024 → double cap
+
+cap(slice) ≥ 1024 → 1.25 multiple cap
+</code></pre></div></div>
+
+<p><em>4.2、</em>扩容过程</p>
+
+<p>重新分配一块更大的内存，将原slice数据拷贝进新的slice返回新的slice并将数据追加进去</p>
+
+<h2 id="5切片容量分配">5、切片容量分配</h2>
+<hr />
+<p>创建切片可根据实际需要分配容量，避免追加过程扩容操作，利于提升性能。</p>
+
+<h2 id="6defer与return">6、defer与return</h2>
+<hr />
+
+<ul>
+  <li>defer函数的执行是先进后出（类似栈）</li>
+  <li>defer 在return前执行</li>
+  <li>关键字return不是原子操作，而是声明返回值，再执行return，而defer就在两步中间执行
+如：</li>
+</ul>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">func</span> <span class="n">A</span><span class="p">()</span> <span class="p">(</span><span class="n">r</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">i</span> <span class="o">:=</span> <span class="m">1</span>
+	<span class="k">defer</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">r</span><span class="o">++</span>	
+	<span class="p">}()</span>
+	<span class="k">return</span> <span class="n">i</span>
+<span class="p">}</span>
+
+<span class="c">//等价于</span>
+<span class="o">&gt;</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">i</span>
+<span class="n">r</span><span class="o">++</span>
+<span class="k">return</span>
+</code></pre></div></div>
+<h2 id="7函数名大小写">7、函数名大小写</h2>
+<hr />
+<blockquote>
+  <p>任何需要对外暴露的名字必须以大写字母开头，不需要对外暴露的则应该以小写字母开头</p>
+</blockquote>
+
+<ul>
+  <li>当命名（包括常量、变量、类型、函数名、结构字段等等）以一个大写字母开头，如：Analysize，那么使用这种形式的标识符的对象就可以被外部包的代码所使用，这被称为导出</li>
+  <li>命名如果以小写字母开头，则对包外是不可见的，但是他们在整个包的内部是可见并且可用的</li>
+</ul>
+:ET
